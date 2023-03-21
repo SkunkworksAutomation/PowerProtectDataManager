@@ -3,6 +3,7 @@ Dell PowerProtect Data Manager Backup Software
 https://developer.dell.com/apis/4378/versions/19.12.0/docs/introduction.md
 
 PowerShell7
+https://github.com/PowerShell/powershell/releases
 
 Modules: 
 - dell.ppdm.psm1 (API version 19.12)
