@@ -8,5 +8,5 @@ https://www.ansible.com/products/automation-platform
 PowerShell7: 
 https://github.com/PowerShell/powershell/releases
 
-WIKI:
+Wiki:
 https://github.com/SkunkworksAutomation/PowerProtectDataManager/wiki
