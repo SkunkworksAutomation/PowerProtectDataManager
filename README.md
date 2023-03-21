@@ -3,9 +3,9 @@ Dell PowerProtect Data Manager Backup Software
 
 PowerShell7
 
-Modules:
-dell.ppdm.psm1 (API version 19.12)
-- PowerShell7 module that covers basic interaction with the PowerProtect Data Manager REST API
+Modules: 
+- dell.ppdm.psm1 (API version 19.12)
+    - PowerShell7 module that covers basic interaction with the PowerProtect Data Manager REST API
     - Functions
         - connect-ppdmapi: method to request a bearer token
         - disconnect-ppdmapi: method to destroy a bearer token
@@ -25,6 +25,9 @@ dell.ppdm.psm1 (API version 19.12)
         - Task-07: example query for system jobs
         - Task-08: example of moving all assets from a source to a target protection policy
 
-dell.utilities.psm1
+- dell.utilities.psm1
+    - PowerShell7 module that covers an basic IAM request
     - Functions
         - get-iamsecret: method to get a password, for a ddboost user, based on the default complexity requirements of PowerProtect Data Manager to show case password management from a 3rd party IAM solution such as CyberArc
+    - Tasks
+        - Task-05: Same as above
