@@ -23,7 +23,7 @@ connect-ppdmapi -Server $ppdm
 
 # MAKE CALL TO YOUR IAM SERVER AND RETRIEVE THE SECRET FOR THE ACCOUNT
 
-Write-Host "[CyberArc]: Retrieving credential information for: $($user)" -ForegroundColor Green
+Write-Host "[IAM]: Retrieving credential information for: $($user)" -ForegroundColor Green
 $iam = get-iamsecret -User $user
 
 # DISPLAY RESULTS FOR DEMO PURPOSES

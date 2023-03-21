@@ -1,6 +1,6 @@
 <#
     THIS CODE REQUIRES POWWERSHELL 7.x.(latest)
-    https://github.com/PowerShell/PowerShell/releases/tag/v7.3.1
+    https://github.com/PowerShell/PowerShell/releases/tag/v7.3.3
 #>
 
 Import-Module .\dell.ppdm.psm1 -Force
