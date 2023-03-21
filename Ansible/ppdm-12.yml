@@ -1,0 +1,86 @@
+---
+- name: Power Protect Data Manager Oracle agent deployment demo
+  hosts: "{{ ansible_play_batch }}"
+  gather_facts: true
+  become: no
+
+  vars:
+
+  tasks:
+# REQUIRES PEXPECT ON TARGET ORACLE HOST: 
+# https://pexpect.readthedocs.io/en/stable/
+
+# MAKE THE DIRECTORY AND GRANT PERMISSIONS
+  - name: Make the directory and assign permissions
+    shell: |
+      mkdir {{install_path}}
+      chown oracle:oinstall {{install_path}}
+    when: ansible_facts['os_family'] == "RedHat"
+    register: makedir
+
+  - name:
+    debug:
+      var: makedir
+
+# COPY THE AGENT TO /TMP
+  - name: Copy the Oracle agent for PowerProtect Data Manager
+    ansible.builtin.copy:
+      src: /var/lib/awx/projects/common/{{oracle_agent}}
+      dest: /tmp
+    when: ansible_facts['os_family'] == "RedHat"
+    register: db_redhat
+
+# UNTAR THE AGENT
+  - name: Untar the Oracle agent
+    shell: |
+      cd /tmp
+      tar -xvf {{oracle_agent}}
+    when: ansible_facts['os_family'] == "RedHat"
+    register: untar
+
+  - name:
+    debug:
+      var: untar.stdout_lines
+
+# EXECUTE THE INSTALL SCRIPT
+  - name: Run the install.sh script
+    ansible.builtin.expect:
+      command: /tmp/ddrman/install.sh
+      responses:
+        (?i)default installation directory: 'n'
+        (?i)installation destination: "{{install_path}}"
+    become: yes
+    become_method: su
+    become_user: oracle
+    register: qa1
+
+  - name:
+    debug:
+      var: qa1.stdout_lines
+
+# INSTALL THE RPM
+  - name: Make the directory and assign permissions
+    shell: |
+      cd /tmp/ddrman
+      rpm -ivh {{oracle_rpm}}
+    when: ansible_facts['os_family'] == "RedHat"
+    register: install
+
+  - name:
+    debug:
+      var: install.stdout_lines
+  
+  # EXECUTE THE INSTALL SCRIPT
+  - name: Run the configureAddOn.sh script
+    ansible.builtin.expect:
+      command: /tmp/ddrman/configureAddOn.sh
+      responses:
+        (?i)default home pathname: "{{install_path}}"
+        (?i)FQDN or IP address: "{{ppdm_host}}.{{ad_domain}}"
+        (?i)default retention time: 'n'
+        (?i)Allow SYSDBA access: 'y'
+    register: qa2
+  
+  - name:
+    debug:
+      var: qa2.stdout_lines

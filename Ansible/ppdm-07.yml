@@ -1,0 +1,35 @@
+- name: Demo PowerProtect Data Manager Windows file system agent deployment
+  hosts: "{{ ansible_play_batch }}"
+  gather_facts: false
+  become: no
+
+  vars_files:
+    - vars/credentials.yml
+  vars:
+
+  tasks:
+# DOWNLOAD THE SQL AGENT FROM ANSIBLE
+  - name: Copy the file system agent to the clients
+    win_copy:
+      src: "{{artifact_path}}/{{fs_agent}}"
+      dest: C:\Windows\Temp\
+    
+# PERFROM A SILENT INSTALL OF THE AGENT
+  - name: Install the file system agents
+    win_command: C:\Windows\Temp\{{fs_agent}} /s PPDMHostName="{{ppdm_host}}.{{ad_domain}}"
+    register: install_status
+  
+  - name:
+    debug:
+      var: install_status
+
+# DELETE THE INSTALLER IF IT EXISTS
+  - name: Delete the file system agent installer C:\Windows\Temp\{{fs_agent}}
+    win_file:
+      path: C:\Windows\Temp\{{fs_agent}}
+      state: absent
+    register: cleanup
+  
+  - name:
+    debug:
+      var: cleanup

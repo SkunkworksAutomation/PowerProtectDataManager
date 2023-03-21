@@ -2,6 +2,25 @@
 Dell PowerProtect Data Manager Backup Software
 https://developer.dell.com/apis/4378/versions/19.12.0/docs/introduction.md
 
+Ansible
+https://www.ansible.com/products/automation-platform
+
+Playbooks (API version 19.12):
+    - ppdm-01: Deploy PowerProtect DM, PowerProtect DDVE, joined to together with vCenter
+    - ppdm-02: Depoly x2 PowerProtect Data Manager vProxies
+    - ppdm-03: Depoly PowerProtect Data Manager search engine
+    - ppdm-04: Create protection policies and rules for virtual machines
+    - ppdm-05: Create a protection policy and rule for MSSQL databases
+    - ppdm-06: Create a protection policy and rule for file systems agents
+    - ppdm-07: Deploy PowerProtect Data Manager Windows file system agents
+    - ppdm-08: Deploy PowerProtect Data Manager MSSQL agents
+    - ppdm-09: Adhoc image backup for protection policies by naming convention
+    - ppdm-10: Adhoc file system backup for defined protection policy
+    - ppdm-11: Adhoc database backup for defined protection policy (FULL, DIFF, and LOGS)
+    - ppdm-12: Deploy the PowerProtect Data Manager Oracle RMAN agent (requires pexpect on oracle host)
+    - ppdm-13: Deploy the PowerProtect Data Manager Linux file system agent
+
+
 PowerShell7
 https://github.com/PowerShell/powershell/releases
 

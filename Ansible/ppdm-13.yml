@@ -1,0 +1,28 @@
+---
+- name: Power Protect Data Manager linux file system agent deployment demo
+  hosts: "{{ ansible_play_batch }}"
+  gather_facts: true
+  become: no
+
+  vars:
+
+  tasks:
+# COPY THE AGENT TO /TMP
+  - name: Copy the linux file system agent for PowerProtect Data Manager
+    ansible.builtin.copy:
+      src: /var/lib/awx/projects/common/{{linux_agent}}
+      dest: /tmp
+    register: download
+
+# UNTAR AND INSTALL THE AGENT
+  - name: Untar and install the linux file system agent
+    shell: |
+      cd /tmp
+      tar -xvf {{linux_agent}}
+      cd /tmp/fsagent
+      ./install.sh --silent-install --server={{ppdm_host}}.{{ad_domain}} --skip-driver
+    register: linux
+
+  - name:
+    debug:
+      var: linux.stdout_lines
