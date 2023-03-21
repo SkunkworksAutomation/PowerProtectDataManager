@@ -1,4 +1,4 @@
-# PowerProtectDataManager
+# PowerProtect Data Manager
 Dell PowerProtect Data Manager Backup Software
 https://developer.dell.com/apis/4378/versions/19.12.0/docs/introduction.md
 
