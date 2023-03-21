@@ -28,4 +28,3 @@ dell.ppdm.psm1 (API version 19.12)
 dell.utilities.psm1
     - Functions
         - get-iamsecret: method to get a password, for a ddboost user, based on the default complexity requirements of PowerProtect Data Manager to show case password management from a 3rd party IAM solution such as CyberArc
-
