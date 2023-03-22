@@ -1,4 +1,4 @@
-# Documentation Links
+# Documentation
 ## PowerProtect Data Manager
 * https://www.dell.com/en-us/dt/data-protection/powerprotect-data-manager.htm <br/>
 * https://developer.dell.com/apis/4378/versions/19.12.0/docs/introduction.md
