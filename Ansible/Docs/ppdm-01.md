@@ -1,4 +1,5 @@
 # Deploy PowerProtect DM, PowerProtect DDVE, joined to together with vCenter
+````
 ### MISC VARIABLES
 ad_domain: vcorp.local <br/>
 artifact_path: /var/lib/awx/projects/common <br/>
@@ -34,3 +35,4 @@ vcenter_dc: DC01-VC01 <br/>
 vcenter_ds: Unity-DS1 <br/>
 vcenter_folder: "/{{vcenter_dc}}/vm/Deploy/" <br/>
 vcenter_network: VM Network <br/>
+````
