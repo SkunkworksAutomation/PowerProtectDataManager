@@ -2,38 +2,38 @@
 ````
 ---
 # MISC VARIABLES
-ad_domain: vcorp.local <br/>
-artifact_path: /var/lib/awx/projects/common <br/>
+ad_domain: vcorp.local
+artifact_path: /var/lib/awx/projects/common
 
 # POWERPROTECT DD VARIABLES
-ddve_host: ddve-01 <br/>
-ddve_acct: sysadmin <br/>
-ddve_old_pwd: changeme <br/>
-ddve_ip: 192.168.3.110 <br/>
-ddve_netmask: 255.255.252.0 <br/>
-ddve_gateway: 192.168.1.250 <br/>
-ddve_dns1: 192.168.1.11 <br/>
-ddve_dns2: 192.168.1.11 <br/>
-ddve_ova: ddve-7.7.0.0-1003850.ova <br/>
-ddve_disk_size: 500 <br/>
-ddve_disk_type: thin <br/>
+ddve_host: ddve-01
+ddve_acct: sysadmin
+ddve_old_pwd: changeme
+ddve_ip: 192.168.3.110
+ddve_netmask: 255.255.252.0
+ddve_gateway: 192.168.1.250
+ddve_dns1: 192.168.1.11
+ddve_dns2: 192.168.1.11
+ddve_ova: ddve-7.7.0.0-1003850.ova
+ddve_disk_size: 500
+ddve_disk_type: thin
 
 # POWERPROTECT DATA MANAGER VARIABLES
-ppdm_host: ppdm-01 <br/>
-ppdm_old_pwd: admin <br/>
-ppdm_ip: 192.168.3.107 <br/>
-ppdm_netmask: 255.255.252.0 <br/>
-ppdm_gateway: 192.168.1.250 <br/>
-ppdm_dns: 192.168.1.11 <br/>
-ppdm_ntp: 192.168.1.11 <br/>
-ppdm_timezone: "US/Central - Central Standard Time" <br/>
-ppdm_ova: dellemc-ppdm-sw-19.11.0-14.ova <br/>
+ppdm_host: ppdm-01
+ppdm_old_pwd: admin
+ppdm_ip: 192.168.3.107
+ppdm_netmask: 255.255.252.0
+ppdm_gateway: 192.168.1.250
+ppdm_dns: 192.168.1.11
+ppdm_ntp: 192.168.1.11
+ppdm_timezone: "US/Central - Central Standard Time"
+ppdm_ova: dellemc-ppdm-sw-19.11.0-14.ova
 
 # VCENTER VARIABLES
-vcenter_host: vc-01.vcorp.local <br/>
-vcenter_esx: esx-physical-01.vcorp.local <br/>
-vcenter_dc: DC01-VC01 <br/>
-vcenter_ds: Unity-DS1 <br/>
-vcenter_folder: "/{{vcenter_dc}}/vm/Deploy/" <br/>
-vcenter_network: VM Network <br/>
+vcenter_host: vc-01.vcorp.local
+vcenter_esx: esx-physical-01.vcorp.local
+vcenter_dc: DC01-VC01
+vcenter_ds: Unity-DS1
+vcenter_folder: "/{{vcenter_dc}}/vm/Deploy/"
+vcenter_network: VM Network
 ````
