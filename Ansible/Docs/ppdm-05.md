@@ -2,11 +2,11 @@
 ````
 ---
 # MISC VARIABLES
-ad_domain: vcorp.local <br/>
+ad_domain: vcorp.local
 
 # POWERPROTECT DD VARIABLES
-ddve_host: ddve-01 <br/>
+ddve_host: ddve-01
 
 # POWERPROTECT DATA MANAGER VARIABLES
-ppdm_host: ppdm-01 <br/>
+ppdm_host: ppdm-01
 ````

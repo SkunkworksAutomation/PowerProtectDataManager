@@ -2,9 +2,9 @@
 ````
 ---
 # MISC VARIABLES
-ad_domain: vcorp.local <br/>
+ad_domain: vcorp.local
 
 # POWERPROTECT DATA MANAGER VARIABLES
-ppdm_host: ppdm-01 <br/>
-linux_agent: fsagent1911_linux_x86_64.tar.gz <br/>
+ppdm_host: ppdm-01
+linux_agent: fsagent1911_linux_x86_64.tar.gz
 ````

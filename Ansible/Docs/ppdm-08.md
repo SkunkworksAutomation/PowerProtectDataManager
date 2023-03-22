@@ -2,8 +2,8 @@
 ````
 ---
 # POWERPROTECT DATA MANAGER VARIABLES
-ppdm_host: ppdm-01 <br/>
-ad_domain: vcorp.local <br/>
-artifact_path: /var/lib/awx/projects/common <br/>
-sql_agent: emcmsappagent-19.11.0.0.exe <br/>
+ppdm_host: ppdm-01
+ad_domain: vcorp.local
+artifact_path: /var/lib/awx/projects/common
+sql_agent: emcmsappagent-19.11.0.0.exe
 ````
