@@ -1,10 +1,11 @@
 # Deploy PowerProtect DM, PowerProtect DDVE, joined to together with vCenter
 ````
-### MISC VARIABLES
+---
+# MISC VARIABLES
 ad_domain: vcorp.local <br/>
 artifact_path: /var/lib/awx/projects/common <br/>
 
-### POWERPROTECT DD VARIABLES
+# POWERPROTECT DD VARIABLES
 ddve_host: ddve-01 <br/>
 ddve_acct: sysadmin <br/>
 ddve_old_pwd: changeme <br/>
@@ -17,7 +18,7 @@ ddve_ova: ddve-7.7.0.0-1003850.ova <br/>
 ddve_disk_size: 500 <br/>
 ddve_disk_type: thin <br/>
 
-### POWERPROTECT DATA MANAGER VARIABLES
+# POWERPROTECT DATA MANAGER VARIABLES
 ppdm_host: ppdm-01 <br/>
 ppdm_old_pwd: admin <br/>
 ppdm_ip: 192.168.3.107 <br/>
@@ -28,7 +29,7 @@ ppdm_ntp: 192.168.1.11 <br/>
 ppdm_timezone: "US/Central - Central Standard Time" <br/>
 ppdm_ova: dellemc-ppdm-sw-19.11.0-14.ova <br/>
 
-### VCENTER VARIABLES
+# VCENTER VARIABLES
 vcenter_host: vc-01.vcorp.local <br/>
 vcenter_esx: esx-physical-01.vcorp.local <br/>
 vcenter_dc: DC01-VC01 <br/>
