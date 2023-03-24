@@ -328,3 +328,123 @@ function set-policyassignment {
         return $Action
     }
 }
+
+function get-sqlhosts {
+    [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$true)]
+        [array]$Filters
+    )
+    begin {
+        
+    } #END BEGIN
+    process {
+        $Results = @()
+        $Endpoint = "hosts"
+        
+        if($Filters.Length -gt 0) {
+            $Join = ($Filters -join ' ') -replace '\s','%20' -replace '"','%22'
+            $Endpoint = "$($Endpoint)?filter=$($Join)"
+        }
+        $Endpoint
+
+        $Query =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method GET `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -Body ($Assets.id | convertto-json) `
+        -SkipCertificateCheck
+ 
+        return $Query.content
+    }
+}
+
+function get-sqlcredentials {
+    [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$true)]
+        [array]$Filters
+    )
+    begin {
+        
+    } #END BEGIN
+    process {
+        $Results = @()
+        $Endpoint = "credentials"
+        
+        if($Filters.Length -gt 0) {
+            $Join = ($Filters -join ' ') -replace '\s','%20' -replace '"','%22'
+            $Endpoint = "$($Endpoint)?filter=$($Join)"
+        }
+        $Endpoint
+
+        $Query =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method GET `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -Body ($Assets.id | convertto-json) `
+        -SkipCertificateCheck
+ 
+        return $Query.content
+    }
+}
+
+function set-sqlcredentials {
+    [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$false)]
+        [string]$SqlId,
+        [Parameter( Mandatory=$false)]
+        [string]$CredId,
+        [Parameter( Mandatory=$true)]
+        [ValidateSet("Assign", "Unassign")]
+        [string]$Operation
+
+    )
+    begin {
+        
+    } #END BEGIN
+    process {
+        $Results = @()
+        $Endpoint = "hosts"
+        
+        $Endpoint
+
+        if($Operation -eq 'Assign') {
+            $Body = [ordered]@{
+                id = $SqlId
+                type = 'APP_HOST'
+                details = @{
+                    appHost = @{
+                        dbConnection = @{
+                            type = 'OS'
+                            credentialId = "$($CredId)"
+                            configureCredential = $true
+                            tnsName = $null
+                            tnsAdmin = $null
+                        }
+                    }
+                }
+            }
+        } else {
+             $Body = [ordered]@{
+                id = $SqlId
+                type = 'APP_HOST'
+                details = @{
+                    appHost = @{
+                    }
+                }
+            }
+        }
+     
+        $Action =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)/$($SqlId)" `
+        -Method PUT `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -Body ($Body | convertto-json -Depth 10) `
+        -SkipCertificateCheck
+ 
+        return $Action
+        
+    }
+}

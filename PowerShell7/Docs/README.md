@@ -11,6 +11,9 @@
         * set-password: method of setting the ddboost user password, assigned to a protection policy, in PowerProtect Datamanager
         * get-policy: method to query for protection policies based on filter
         * set-policyassignment: method to batch assign, or unassign assets to a protection policy based on policy id, and assets id
+        * get-sqlhosts: method to query for sql hosts based on filter
+        * get-sqlcredentials: method to query for credentials
+        * set-sqlcredentials: method to assign, or unassign credentials to a sql host
     * Tasks
         * Task-01: example query for virtual machine assets
         * Task-02: example query for filesystem assets
