@@ -419,7 +419,7 @@ function set-sqlcredentials {
                         dbConnection = @{
                             type = 'OS'
                             credentialId = "$($CredId)"
-                            configureCredential = $true
+                            configureCredential = $false
                             tnsName = $null
                             tnsAdmin = $null
                         }

@@ -23,6 +23,7 @@
         * Task-06: example query for unacknowledged alerts
         * Task-07: example query for system jobs
         * Task-08: example of moving all assets from a source to a target protection policy
+        * Task-09: example of updating SQL host credentials from a csv, or hash table
 
 * dell.utilities.psm1
     * PowerShell7 module that covers a basic IAM request
