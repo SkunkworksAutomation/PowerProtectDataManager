@@ -52,11 +52,11 @@ $sql | foreach-object {
     $Credentials = get-sqlcredentials -Filters $Filters
     # $Credentials | format-list
 
-    # ASSIGN THE CREDENTIALS
-    set-sqlcredentials -SqlId $SqlHost.id -CredId $Credentials.id -Operation Assign
+    # ASSIGN THE CREDENTIALS, ASSUMES CREDENTIALS ARE USED FOR BACKUP AND DISCOVERY
+    set-sqlcredentials -SqlHost $SqlHost -CredId $Credentials.id -Operation Assign
 
     # UNASSIGN THE CREDENTIALS
-    # set-sqlcredentials -SqlId $SqlHost.id -Operation Unassign
+    # set-sqlcredentials -SqlHost $SqlHost -Operation Unassign
 
 }
 

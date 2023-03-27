@@ -393,7 +393,7 @@ function set-sqlcredentials {
     [CmdletBinding()]
     param (
         [Parameter( Mandatory=$false)]
-        [string]$SqlId,
+        [object]$SqlHost,
         [Parameter( Mandatory=$false)]
         [string]$CredId,
         [Parameter( Mandatory=$true)]
@@ -411,24 +411,33 @@ function set-sqlcredentials {
         $Endpoint
 
         if($Operation -eq 'Assign') {
-            $Body = [ordered]@{
-                id = $SqlId
+           $Body = [ordered]@{
+                id = $SqlHost.id
                 type = 'APP_HOST'
                 details = @{
                     appHost = @{
                         dbConnection = @{
                             type = 'OS'
                             credentialId = "$($CredId)"
-                            configureCredential = $false
+                            configureCredential = $true
                             tnsName = $null
                             tnsAdmin = $null
                         }
                     }
                 }
+                applicationsOfInterest = @(
+                    [ordered]@{
+                        name = "$($SqlHost.details.appHost.applicationsOfInterest.name)"
+                        version = "$($SqlHost.details.appHost.applicationsOfInterest.version)"
+                        type =  "$($SqlHost.details.appHost.applicationsOfInterest.type)"
+                        updateCapable = $true
+                        pushHostCredential = $true
+                    }
+                )
             }
         } else {
              $Body = [ordered]@{
-                id = $SqlId
+                id = $SqlHost.id
                 type = 'APP_HOST'
                 details = @{
                     appHost = @{
@@ -437,7 +446,7 @@ function set-sqlcredentials {
             }
         }
      
-        $Action =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)/$($SqlId)" `
+        $Action =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)/$($SqlHost.id)" `
         -Method PUT `
         -ContentType 'application/json' `
         -Headers ($AuthObject.token) `
