@@ -352,7 +352,6 @@ function get-sqlhosts {
         -Method GET `
         -ContentType 'application/json' `
         -Headers ($AuthObject.token) `
-        -Body ($Assets.id | convertto-json) `
         -SkipCertificateCheck
  
         return $Query.content
@@ -382,7 +381,6 @@ function get-sqlcredentials {
         -Method GET `
         -ContentType 'application/json' `
         -Headers ($AuthObject.token) `
-        -Body ($Assets.id | convertto-json) `
         -SkipCertificateCheck
  
         return $Query.content
@@ -455,5 +453,144 @@ function set-sqlcredentials {
  
         return $Action
         
+    }
+}
+
+function get-drserverconfig {
+    [CmdletBinding()]
+    param (
+    )
+    begin {
+        
+    } #END BEGIN
+    process {
+        $Endpoint = "server-disaster-recovery-configurations"
+        
+        $Query =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method GET `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -SkipCertificateCheck
+ 
+        return $Query.content
+    }
+}
+
+function set-drserverconfig {
+    [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$false)]
+        [string]$PPDM,
+        [Parameter( Mandatory=$false)]
+        [string]$DataDomain,
+        [Parameter( Mandatory=$false)]
+        [string]$ConfigId
+    )
+    begin {
+         # CHECK TO SEE IF CREDS FILE EXISTS IF NOT CREATE ONE
+        $Exists = Test-Path -Path ".\$($DataDomain).xml" -PathType Leaf
+        if($Exists) {
+            $Credential = Import-CliXml ".\$($DataDomain).xml"
+        } else {
+            $Credential = Get-Credential -Message "Please enter your PowerProtect DD credentials"
+            $Credential | Export-CliXml ".\$($DataDomain).xml"
+        } 
+    } #END BEGIN
+    process {
+        $Endpoint = "server-disaster-recovery-configurations/$($ConfigId)"
+
+        # PARSE OUT THE PPDM FQDN
+        $ppdm = (($AuthObject.server) -split 'https://' | select-object -Last 1) -split ':' | select-object -First 1
+
+        $Body = @{
+            id= "$($ConfigId)"
+            repositoryHost="$($DataDomain)"
+            repositoryPath=""
+            repositoryFilesystem="BOOST_FILE_SYSTEM"
+            credentialUsername="$($ppdm)"
+            credentialPassword="$(ConvertFrom-SecureString -SecureString $Credential.password -AsPlainText)"
+        }
+        
+        $Query =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method PUT `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -Body ($Body | convertto-json) `
+        -SkipCertificateCheck
+    
+        return $Query
+        
+    }
+}
+
+function get-drserverhosts {
+     [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$false)]
+        [string]$Version
+    )
+    begin {
+
+    } #END BEGIN
+    process {
+        $Endpoint = "server-disaster-recovery-hosts?filter=version eq `"$($Version)`""
+        
+        $Query =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method GET `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -SkipCertificateCheck
+    
+        return $Query.content
+    }
+}
+
+function get-drserverbackups {
+     [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$false)]
+        [string]$NodeId
+    )
+    begin {
+
+    } #END BEGIN
+    process {
+        $Endpoint = "server-disaster-recovery-backups?filter=nodeId eq `"$($NodeId)`""
+        
+        $Query =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method GET `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -SkipCertificateCheck
+
+        # ASSUMES YOU WANT THE LATEST BACKUP
+        return $Query.content[0]
+    }
+}
+
+function new-drserverrecovery {
+     [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$false)]
+        [object]$Backup
+    )
+    begin {
+
+    } #END BEGIN
+    process {
+        $Endpoint = "server-disaster-recovery-backups/$($Backup.id)"
+        
+        # ADD THE RECOVER PROPERTY TO THE REQUEST BODY
+        $Backup | Add-Member -NotePropertyName recover -NotePropertyValue $true 
+
+        $Action =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method PUT `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -Body ($Backup | convertto-json -Depth 50) `
+        -SkipCertificateCheck
+
+        # ASSUMES YOU WANT THE LATEST BACKUP
+        return $Action
     }
 }

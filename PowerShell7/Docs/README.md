@@ -14,6 +14,11 @@
         * get-sqlhosts: method to query for sql hosts based on filter
         * get-sqlcredentials: method to query for credentials
         * set-sqlcredentials: method to assign, or unassign credentials to a sql host
+        * get-drserverconfig: method to the default dr recovery config
+        * set-drserverconfig: method to update the default dr config
+        * get-drserverhosts: method to get the dr server hosts
+        * get-drserverbackups: method to get the dr server backups
+        * new-drserverrecovery: method to start a new dr server recovery
     * Tasks
         * Task-01: example query for virtual machine assets
         * Task-02: example query for filesystem assets
@@ -24,6 +29,7 @@
         * Task-07: example query for system jobs
         * Task-08: example of moving all assets from a source to a target protection policy
         * Task-09: example of updating SQL host credentials from a csv, or hash table
+        * Task-10: example of DR recovery of the PowerProtect Data Manager server
 
 * dell.utilities.psm1
     * PowerShell7 module that covers a basic IAM request
