@@ -590,7 +590,6 @@ function new-drserverrecovery {
         -Body ($Backup | convertto-json -Depth 50) `
         -SkipCertificateCheck
 
-        # ASSUMES YOU WANT THE LATEST BACKUP
         return $Action
     }
 }
