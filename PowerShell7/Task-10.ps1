@@ -11,7 +11,7 @@ $dd = 'ddve-01.vcorp.local'
 connect-ppdmapi -Server $ppdm
 
 <#
-    SERVER DISASTER RECOVERY
+    PERFORM DISASTER RECOVERY OF POWERPROTECT DATA MANAGER SERVER
 #>
 
 # GET THE DR CONFIGURATION
