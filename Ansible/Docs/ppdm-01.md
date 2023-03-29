@@ -1,4 +1,4 @@
-# Deploy PowerProtect DM, PowerProtect DDVE, joined to together with vCenter
+# Deploy PowerProtect Data Manager, PowerProtect DDVE, joined to together with vCenter
 ````
 ---
 # MISC VARIABLES
