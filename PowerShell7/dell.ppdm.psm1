@@ -295,6 +295,45 @@ function get-policy {
     }
 }
 
+function set-policy {
+    [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$false)]
+        [object]$Policy,
+        [Parameter( Mandatory=$false)]
+        [bool]$Enabled
+    )
+    begin {
+        
+    } #END BEGIN
+    process {
+        $Results = @()
+        $Endpoint = "protection-policies-batch"
+        $Endpoint
+
+        $Body = [ordered]@{
+            requests = @(
+                @{
+                    id = 1
+                    body = @{
+                        id= $Policy.id
+                        enabled = $Enabled
+                    }
+                }
+            )
+        }
+        $Action =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method PATCH `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -Body ($Body | convertto-json -Depth 10) `
+        -SkipCertificateCheck
+        $Results += $Action.content
+
+        return $Results
+    }
+}
+
 function set-policyassignment {
     [CmdletBinding()]
     param (

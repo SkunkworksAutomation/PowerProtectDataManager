@@ -10,6 +10,7 @@
         * get-alerts: method to query for alerts based on filter
         * set-password: method of setting the ddboost user password, assigned to a protection policy, in PowerProtect Datamanager
         * get-policy: method to query for protection policies based on filter
+        * set-policy: method to enable, or disable a protection policy
         * set-policyassignment: method to batch assign, or unassign assets to a protection policy based on policy id, and assets id
         * get-sqlhosts: method to query for sql hosts based on filter
         * get-sqlcredentials: method to query for credentials
@@ -30,6 +31,7 @@
         * Task-08: example of moving all assets from a source to a target protection policy
         * Task-09: example of updating SQL host credentials from a csv, or hash table
         * Task-10: example of DR recovery of the PowerProtect Data Manager server
+        * Task-11: example of enabling, or disabling a protection policy
 
 * dell.utilities.psm1
     * PowerShell7 module that covers a basic IAM request
