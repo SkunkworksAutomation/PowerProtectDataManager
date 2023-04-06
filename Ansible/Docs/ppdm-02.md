@@ -1,4 +1,4 @@
-# Depoly x2 PowerProtect Data Manager vProxies
+# Depoly x2 PowerProtect Data Manager Protection Engines
 ````
 ---
 # MISC VARIABLES
