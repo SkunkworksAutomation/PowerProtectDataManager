@@ -715,8 +715,12 @@
       body_format: json
     register: activity
 
+  - name:
+    debug:
+      var: activity.json
+
 # GET THE ACTIVITY STATUS
-  - name: "( {{ppdm_host}} ): Check the VM Inventory Discovery activity status"
+  - name: "( {{ppdm_host}} ): Check the VM Inventory Discovery activity status {{ activity.json.content[0].id }}"
     uri:
       url: https://{{ppdm_host}}:8443/api/v2/activities/{{ activity.json.content[0].id }}
       headers:
@@ -726,6 +730,7 @@
       validate_certs: no
       return_content: yes
       body_format: json
+    when: activity.json.content | length > 0
     register: activitystatus
     until: activitystatus.status == 200 and activitystatus.json.progress == 100 and activitystatus.json.state == 'COMPLETED'
     retries: 180
