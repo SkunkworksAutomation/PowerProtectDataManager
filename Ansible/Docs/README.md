@@ -1,5 +1,5 @@
 | Task    | Description                                                                |
-| ------- |:--------------------------------------------------------------------------:|
+| ------- |:---------------------------------------------------------------------------|
 | PPDM-01 | Deploy PowerProtect DM, PowerProtect DDVE, joined to together with vCenter |
 | PPDM-02 | Depoly x2 PowerProtect Data Manager vProxies                               |
 | PPDM-03 | Depoly PowerProtect Data Manager search engine                             |
