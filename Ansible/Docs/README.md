@@ -13,4 +13,3 @@
 | PPDM-11 | Adhoc database backup for defined protection policy                        |
 | PPDM-12 | Deploy the PowerProtect Data Manager Oracle RMAN agent                     |
 | PPDM-13 | Deploy the PowerProtect Data Manager Linux file system agent               |
-| PPDM-14 | Execute a file level recovery                                              |
