@@ -36,6 +36,6 @@
 * dell.utilities.psm1
     * PowerShell7 module that covers a basic IAM request
     * Functions
-        * get-iamsecret: method to get a password, for a ddboost user, based on the default complexity requirements of PowerProtect Data Manager to show case password management from a 3rd party IAM solution such as CyberArc
+        * get-iamsecret: method to get a password, for a ddboost user, based on the default complexity requirements of PowerProtect Data Manager to show case password management from a 3rd party IAM solution such as CyberArk
     * Tasks
         * Task-05: Same as above
