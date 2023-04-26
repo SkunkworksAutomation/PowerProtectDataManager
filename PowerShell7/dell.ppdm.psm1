@@ -156,6 +156,32 @@ function get-activities {
     }
 }
 
+function set-activity {
+    [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$false)]
+        [string]$Id
+    )
+    begin {
+        
+    } #END BEGIN
+    process {
+        $Results = @()
+        $Endpoint = "activities/$($Id)/cancel"
+
+        
+        $Action =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method POST `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -Body ($Body | convertto-json -Depth 10) `
+        -SkipCertificateCheck
+        $Results += $Action
+
+        return $Results
+    }
+}
+
 function get-alerts {
     [CmdletBinding()]
     param (
