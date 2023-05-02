@@ -1,6 +1,6 @@
 # Scripts (API version 19.12):
 ## Modules: 
-* dell.ppdm.psm1 (API version 19.12)
+* dell.ppdm.psm1
     * PowerShell7 module that covers basic interaction with the PowerProtect Data Manager REST API
     * Functions
         * connect-ppdmapi: method to request a bearer token
