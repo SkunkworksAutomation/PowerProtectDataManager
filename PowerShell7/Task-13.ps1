@@ -6,7 +6,6 @@
 Import-Module .\dell.ppdm.psm1 -Force
 $ppdm = 'ppdm-01.vcorp.local'
 $pagesize = 25
-$asset = @()
 [bool]$excluded = $true
 connect-ppdmapi -Server $ppdm
 
@@ -24,7 +23,7 @@ $vms | foreach-object {
         "name eq `"$($_)`""
         "type eq `"VMWARE_VIRTUAL_MACHINE`""
     )
-    $asset += get-assets -Filters $Filters -PageSize $pagesize
+    $asset = get-assets -Filters $Filters -PageSize $pagesize
 
     set-diskexclusions -Asset $asset -Excluded $excluded
 
