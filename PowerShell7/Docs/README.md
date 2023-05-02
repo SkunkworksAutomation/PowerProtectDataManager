@@ -21,6 +21,7 @@
         * get-drserverbackups: method to get the dr server backups
         * new-drserverrecovery: method to start a new dr server recovery
         * set-activity: method to cancel a queued or running activity
+        * set-diskexclusions: method to include, or exclude all disks except for Hard disk 1 for a virtual machine asset
     * Tasks
         * Task-01: example query for virtual machine assets
         * Task-02: example query for filesystem assets
@@ -34,6 +35,7 @@
         * Task-10: example of DR recovery of the PowerProtect Data Manager server
         * Task-11: example of enabling, or disabling a protection policy
         * Task-12: example of canceling all activities in a queued, or running state with a start time in the last 24 hours
+        * Task-13: example of including or excluding all disks for a virtual machine asset except for Hard disk 1
 
 * dell.utilities.psm1
     * PowerShell7 module that covers a basic IAM request

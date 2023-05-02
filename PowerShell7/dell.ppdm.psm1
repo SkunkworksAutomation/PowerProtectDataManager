@@ -335,7 +335,6 @@ function set-policy {
     process {
         $Results = @()
         $Endpoint = "protection-policies-batch"
-        $Endpoint
 
         $Body = [ordered]@{
             requests = @(
@@ -656,5 +655,68 @@ function new-drserverrecovery {
         -SkipCertificateCheck
 
         return $Action
+    }
+}
+
+function set-diskexclusions {
+    [CmdletBinding()]
+    param (
+        [Parameter( Mandatory=$false)]
+        [object]$Asset,
+        [Parameter( Mandatory=$false)]
+        [bool]$Excluded
+    )
+    begin {
+        
+    } #END BEGIN
+    process {
+        $Results = @()
+        $Endpoint = "assets/$($Asset.id)"
+
+        [array]$Settings = @()
+        [array]$disks = $Asset.details.vm.disks
+
+        # ENUMERATE THE DISKS ARRAY
+        foreach($disk in $disks) {
+
+            # ECLUDING HARD DISK 1
+            if($disk.label -eq 'Hard disk 1') {
+                # CREATE THE SETTINGS
+                    $object = @{
+                        excluded = $false
+                        key = $disk.key
+                        name = $disk.name
+                    }
+                } else {
+                    $object = @{
+                        excluded = $Excluded
+                        key = $disk.key
+                        name = $disk.name
+                    }
+            } # END IF
+
+            # ADD THE SETTINGS TO THE SETTINGS ARRAY
+            $Settings += (New-Object -TypeName pscustomobject -Property $object)
+
+        } # END FOREACH
+        # CREATE THE REQUEST BODY WITH THE NEW SETTINGS
+        $Body = [ordered]@{
+            id = $Asset.id
+            details = @{
+                vm = [ordered]@{
+                    disks = $Settings | sort-Object key
+                }
+            }
+        }
+        
+        $Action =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)" `
+        -Method PATCH `
+        -ContentType 'application/json' `
+        -Headers ($AuthObject.token) `
+        -Body ($Body | convertto-json -Depth 25) `
+        -SkipCertificateCheck
+        $Results += $Action
+
+        return $Results
     }
 }
