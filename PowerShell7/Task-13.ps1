@@ -14,7 +14,7 @@ $vms = @(
     'vc1-win-01'
 )
 <#
-    INCLUDE OR EXCLUDE ALL DISKS FOR VRTUAL MACHINE ASSETS EXCPET:
+    INCLUDE OR EXCLUDE ALL DISKS FOR VRTUAL MACHINE ASSETS EXCEPT:
     Hard disk 1
 #>
 
@@ -28,7 +28,5 @@ $vms | foreach-object {
     set-diskexclusions -Asset $asset -Excluded $excluded
 
 }
-# $result | select-object id,name,type,updateAt | format-table -AutoSize
-
 
 disconnect-ppdmapi
