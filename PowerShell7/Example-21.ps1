@@ -7,21 +7,22 @@ Import-Module .\dell.ppdm.psm1 -Force
 
 # VARS
 $Server = "ppdm-01.vcorp.local"
-$PageSize = 100
+$PageSize = 1
 
 # CONNECT THE THE REST API
 connect-dmapi -Server $Server
 
-# GET ALERTS BASED ON FILTERS
+# GET CREDENTIALS BASED ON FILTER
 $Filters = @(
-    "acknowledgement.acknowledgeState eq `"UNACKNOWLEDGED`""
+    "name eq `"SYSADMIN`""
 )
-$Alerts = get-dmalerts -Filters $Filters -PageSize $PageSize
+$Credentials = get-dmcredentials -Filters $Filters -PageSize $PageSize
 
-# GET ALL ALERTS
-# $Alerts = get-dmalerts -PageSize $PageSize
+# GET ALL CREDENTIALS
+# $Credentials = get-dmcredentials -PageSize $PageSize
 
-$Alerts | format-list 
+
+$Credentials | format-list
 
 # DISCONNECT FROM THE REST API
 disconnect-dmapi
