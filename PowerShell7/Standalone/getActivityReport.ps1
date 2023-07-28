@@ -25,7 +25,7 @@ $Servers = @(
 )
 $PageSize = 100
 $ReportName = "MyActivityReport"
-$OutPath = "C:\Users\rodric1\OneDrive - Dell Technologies\Documents\customers\Viatris"
+$OutPath = "C:\Reports"
 $OutFile = "$($OutPath)\$($ReportName).xlsx"
 <#
     ENUMERATIONS FOR THE TABLE STYLES CAN BE FOUND HERE:
