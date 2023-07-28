@@ -21,7 +21,7 @@ $global:AuthObject = $null
 
 # VARS
 $Servers = @(
-    "10.239.100.131"
+    "ppdm-01.vcorp.local"
 )
 $PageSize = 100
 $ReportName = "MyActivityReport"
