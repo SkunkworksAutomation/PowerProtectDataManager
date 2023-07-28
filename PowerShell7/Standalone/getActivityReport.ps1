@@ -479,6 +479,11 @@ for($i=0;$i -lt $Activities.count; $i++) {
     $Excel.cells.item($i+2,9) = $Activities[$i].endTime
     $Excel.cells.item($i+2,10) = $Activities[$i].duration
     $Excel.cells.item($i+2,11) = $Activities[$i].nextScheduledTime
+
+    if($Activities[$i].jobStatus -eq "FAILED") {
+        $Excel.cells.item($i+2,12).Interior.ColorIndex = 3 
+    }
+    
     $Excel.cells.item($i+2,12) = $Activities[$i].jobStatus
     $Excel.cells.item($i+2,13) = $Activities[$i].assetSize
     $Excel.cells.item($i+2,14) = $Activities[$i].bytesTransferred
