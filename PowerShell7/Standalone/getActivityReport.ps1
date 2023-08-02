@@ -21,12 +21,15 @@ $global:AuthObject = $null
 
 # VARS
 $Servers = @(
-    "ppdm-01.vcorp.local"
+    "myfakehost.vcorp.local"
+    "10.239.100.131"
 )
+$Retires = @(1..5)
+$Seconds = 10
 $PageSize = 100
-$ReportName = "MyActivityReport"
+$ReportName = "ActivityReport"
 $OutPath = "C:\Reports"
-$OutFile = "$($OutPath)\$($ReportName).xlsx"
+$OutFile = "$($OutPath)\$((Get-Date).ToString('yyyy-MM-dd'))-$($ReportName).xlsx"
 <#
     ENUMERATIONS FOR THE TABLE STYLES CAN BE FOUND HERE:
         https://learn.microsoft.com/en-us/javascript/api/excel/excel.builtintablestyle?view=excel-js-preview
@@ -383,49 +386,61 @@ function get-dmmtrees {
 # ITERATE OVER THE PPDM HOSTS
 $Activities = @()
 $Servers | ForEach-Object { 
-    # CONNECT THE THE REST API
-    connect-dmapi -Server $_
+    foreach($Retry in $Retires) {
+        try {
+            # CONNECT THE THE REST API
+            connect-dmapi -Server $_
+            # QUERY FOR THE ACTIVITIES
+            $Query = get-dmactivities -Filters $Filters -PageSize $PageSize
+            
+            # QUERY FOR POLICIES
+            $Mtrees = get-dmmtrees -PageSize $PageSize
 
-    # QUERY FOR THE ACTIVITIES
-    $Query = get-dmactivities -Filters $Filters -PageSize $PageSize
-    
-    # QUERY FOR MTREES
-    $Mtrees = get-dmmtrees -PageSize $PageSize
+            # QUERY FOR POLICIES
+            $Policies = get-dmprotectionpolicies -PageSize $PageSize
 
-    # QUERY FOR POLICIES
-    $Policies = get-dmprotectionpolicies -PageSize $PageSize
+            foreach($Item in $Query) {
+                $Policy = $Policies | Where-Object {$_.id -eq $Item.protectionPolicy.id}
+                $Protection = $Policy.stages | where-object {$_.type -eq "PROTECTION"}
+                $Replication = $Policy.stages | where-object {$_.type -eq "REPLICATION"}
+                $storageMtree = $Mtrees | Where-Object {$_.id -eq $Protection.target.dataTargetId}
+                $replicationMtree = $Mtrees | Where-Object {$_.id -eq $Replication.target.dataTargetId}
+        
+                $Object = [ordered]@{
+                    assetName = $Item.asset.name
+                    assetType = $Item.asset.type
+                    jobId = $Item.id
+                    ppdmServer = $_
+                    policyName = $Item.protectionPolicy.name
+                    scheduleType = $Protection.operations.schedule.frequency
+                    startTime = $Item.startTime
+                    endTime = $Item.endTime
+                    duration = $Item.duration
+                    nextScheduledTime = $Item.nextScheduledTime
+                    jobStatus = $Item.result.status
+                    assetSize = $Item.stats.assetSizeInBytes
+                    bytesTransferred = $Item.stats.bytesTransferredThroughput
+                    storageTarget = "$($Item.storageSystem.name)/$($storageMtree.name)"
+                    replicationTarget = "$($replicationMtree._embedded.storageSystem.name)/$($replicationMtree.name)"
+                    hostName = $Item.host.name
 
-    foreach($Item in $Query) {
-        $Policy = $Policies | Where-Object {$_.id -eq $Item.protectionPolicy.id}
-        $Protection = $Policy.stages | where-object {$_.type -eq "PROTECTION"}
-        $Replication = $Policy.stages | where-object {$_.type -eq "REPLICATION"}
-        $storageMtree = $Mtrees | Where-Object {$_.id -eq $Protection.target.dataTargetId}
-        $replicationMtree = $Mtrees | Where-Object {$_.id -eq $Replication.target.dataTargetId}
- 
-        $Object = [ordered]@{
-            assetName = $Item.asset.name
-            assetType = $Item.asset.type
-            jobId = $Item.id
-            ppdmServer = $_
-            policyName = $Item.protectionPolicy.name
-            scheduleType = $Protection.operations.schedule.frequency
-            startTime = $Item.startTime
-            endTime = $Item.endTime
-            duration = $Item.duration
-            nextScheduledTime = $Item.nextScheduledTime
-            jobStatus = $Item.result.status
-            assetSize = $Item.stats.assetSizeInBytes
-            bytesTransferred = $Item.stats.bytesTransferredThroughput
-            storageTarget = "$($Item.storageSystem.name)/$($storageMtree.name)"
-            replicationTarget = "$($replicationMtree._embedded.storageSystem.name)/$($replicationMtree.name)"
+                }
 
+                $Activities += New-Object -TypeName psobject -Property $Object
+            }
+            # DISCONNECT THE THE REST API
+            disconnect-dmapi
+            # BREAK OUT OF THE CURRENT LOOP (RETRIES)
+            break;
+        } catch {
+            if($Retry -lt $Retires.length) {
+                Write-Host "[WARNING]: $($_). Sleeping $($Seconds) seconds... Attempt #: $($Retry)" -ForegroundColor Yellow
+                Start-Sleep -Seconds $Seconds
+            } else {
+                Write-Host "[ERROR]: $($_). Attempts: $($Retry), moving on..." -ForegroundColor Red
+            }
         }
-
-        $Activities += New-Object -TypeName psobject -Property $Object
-    }
-
-    # DISCONNECT THE THE REST API
-    disconnect-dmapi
+    } # END RETRIES
 }
 
 # LAUNCH EXCEL
@@ -519,7 +534,7 @@ if($PDF) {
     $Worksheet.PageSetup.Orientation = 2
     # ZOOM
     $Worksheet.PageSetup.Zoom = 30
-    $OutFile = "$($OutPath)\$($ReportName).pdf"
+    $OutFile = "$($OutPath)\$((Get-Date).ToString('yyyy-MM-dd'))-$($ReportName).pdf"
     $Worksheet.ExportAsFixedFormat($xlFixedFormat::xlTypePDF,$OutFile)
 } else {
     $Workbook.SaveAs($OutFile) 
