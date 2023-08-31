@@ -26,3 +26,4 @@
 | Example-23  | Create new credentials                                                   | ANY         | Config   |
 | Example-24  | Deploy a search node                                                     | VMWARE      | Config   |
 | Example-25  | Get the audit logs based on filters                                      | ANY         | Query    |
+| Example-26  | Recover a MSSQL database asset to multiple SQL hosts on a custom paths   | ANY         | Recover  |
