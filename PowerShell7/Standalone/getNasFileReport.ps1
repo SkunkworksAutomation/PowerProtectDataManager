@@ -245,10 +245,10 @@ function get-dmprotectionpolicies {
 function get-dmfileinstances {
 <#
     .SYNOPSIS
-    Get PowerProtect Data Manager protection policies
+    Get PowerProtect Data Manager file instances
     
     .DESCRIPTION
-    Get PowerProtect Data Manager protection policies based on filters
+    Get PowerProtect Data Manager file instances based on filters
 
     .PARAMETER Filters
     An array of values used to filter the query
@@ -260,16 +260,17 @@ function get-dmfileinstances {
     System.Array
 
     .EXAMPLE
-    PS> # Get dd mtrees
-    PS>  $Mtrees = get-dmmtrees -PageSize 100
-
-    .LINK
-    https://developer.dell.com/apis/4378/versions/19.14.0/reference/ppdm-public.yaml/paths/~1api~1v2~1datadomain-mtrees/get
-
+    PS> # Get file instances
+    PS> $Filters = @(
+        "objectType eq `"NAS`"",
+        "and not exists (tags.skippedAcl or tags.skippedData or tags.skippedFiltered)",
+        "and itemType eq `"file`""
+    )
+    PS>  $Query = get-dmfileinstances -Filters $Filters -PageSize $PageSize
 #>
     [CmdletBinding()]
     param (
-        [Parameter( Mandatory=$false)]
+        [Parameter( Mandatory=$true)]
         [array]$Filters,
         [Parameter( Mandatory=$true)]
         [int]$PageSize
@@ -284,10 +285,9 @@ function get-dmfileinstances {
         if($Filters.Length -gt 0) {
             $Join = ($Filters -join ' ') -replace '\s','%20' -replace '"','%22'
             $Endpoint = "$($Endpoint)?filter=$($Join)"
-        }else {
-            $Endpoint = "$($Endpoint)?"
         }
-        $Query =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)pageSize=$($PageSize)&page=$($Page)" `
+
+        $Query =  Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)&pageSize=$($PageSize)&page=$($Page)" `
         -Method GET `
         -ContentType 'application/json' `
         -Headers ($AuthObject.token) `
@@ -301,7 +301,7 @@ function get-dmfileinstances {
             $Page++
             # PAGE THROUGH THE RESULTS
             do {
-                $Paging = Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)pageSize=$($PageSize)&page=$($Page)" `
+                $Paging = Invoke-RestMethod -Uri "$($AuthObject.server)/$($Endpoint)&pageSize=$($PageSize)&page=$($Page)" `
                 -Method GET `
                 -ContentType 'application/json' `
                 -Headers ($AuthObject.token) `
