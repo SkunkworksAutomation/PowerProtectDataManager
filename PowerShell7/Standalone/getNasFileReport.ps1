@@ -38,7 +38,7 @@ $HeaderRow = 7
     SCALE THE RENDERED PDF DOWN TO $Zoom
     SO IT WILL FIT WITHDH WISE ON THE PAGE
 #>
-$Zoom = 25
+$Zoom = 35
 # VALUES: PORTRIAIT = 1, LANDSCAPE = 2
 $Orientation = 2
 
@@ -267,6 +267,7 @@ function get-dmfileinstances {
         "and itemType eq `"file`""
     )
     PS>  $Query = get-dmfileinstances -Filters $Filters -PageSize $PageSize
+
 #>
     [CmdletBinding()]
     param (
