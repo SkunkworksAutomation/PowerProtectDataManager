@@ -372,9 +372,9 @@ function get-dmlogexportfile {
 
     } # END PROCESS
 }
-# CONNECT THE THE REST API
+# CONNECT TO THE REST API
 connect-dmapi -Server $Server
-# category eq "PROTECT" and classType eq "JOB" and state eq "COMPLETED"
+
 $Filters = @(
     "category eq `"PROTECT`"",
     "and classType eq `"JOB`"",
