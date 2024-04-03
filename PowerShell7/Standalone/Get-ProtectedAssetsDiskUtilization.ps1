@@ -423,5 +423,5 @@ foreach($asset in ($assets | sort-object Name)) {
 
     $Report += (New-Object -TypeName psobject -Property $Object)
 }
-# $Report | sort-object Guest | Export-csv -Path $ReportFile
+$Report | sort-object Guest | Export-csv -Path $ReportFile
 $Report | sort-object Guest | Select-Object Guest,vmCapacityGB,vmFreeSpaceGB,vmUsedSpaceGB,osCapacityGB,osFreeSpaceGB,osUsedSpaceGB | Format-Table -AutoSize
