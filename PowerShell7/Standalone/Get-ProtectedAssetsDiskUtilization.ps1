@@ -359,23 +359,22 @@ foreach($asset in ($assets | sort-object Name)) {
        
     } else {
         <# 
-            THIS WILL RETURN SIZE, USED, AVAILABLE, USED%, MOUNTED ON 
-            df -h --total
-
-            Filesystem                        1K-blocks    Used Available Use% Mounted on
-            udev                                1960776       0   1960776   0% /dev
-            tmpfs                                401380    1172    400208   1% /run
-            /dev/mapper/ubuntu--vg-ubuntu--lv  12016792 5302004   6082572  47% /
-            tmpfs                               2006892       0   2006892   0% /dev/shm
-            tmpfs                                  5120       0      5120   0% /run/lock
-            tmpfs                               2006892       0   2006892   0% /sys/fs/cgroup
-            /dev/loop0                            63488   63488         0 100% /snap/core20/1328
-            /dev/loop2                            41472   41472         0 100% /snap/snapd/20671
-            /dev/loop1                            68864   68864         0 100% /snap/lxd/21835
-            /dev/loop3                            94080   94080         0 100% /snap/lxd/24061
-            /dev/loop4                            65536   65536         0 100% /snap/core20/2105
-            /dev/sda2                           1510792  110224   1305544   8% /boot
-            tmpfs                                401376       0    401376   0% /run/user/1000
+            dell@uubu-fsa-01:~$ df -h --total
+            Filesystem                         Size  Used Avail Use% Mounted on
+            udev                               1.9G     0  1.9G   0% /dev
+            tmpfs                              392M  1.3M  391M   1% /run
+            /dev/mapper/ubuntu--vg-ubuntu--lv   12G  5.7G  5.3G  52% /
+            tmpfs                              2.0G     0  2.0G   0% /dev/shm
+            tmpfs                              5.0M     0  5.0M   0% /run/lock
+            tmpfs                              2.0G     0  2.0G   0% /sys/fs/cgroup
+            /dev/loop2                          41M   41M     0 100% /snap/snapd/20671
+            /dev/loop1                          68M   68M     0 100% /snap/lxd/21835
+            /dev/loop3                          92M   92M     0 100% /snap/lxd/24061
+            /dev/loop4                          64M   64M     0 100% /snap/core20/2105
+            /dev/sda2                          1.5G  209M  1.2G  16% /boot
+            /dev/loop5                          64M   64M     0 100% /snap/core20/2182
+            tmpfs                              392M     0  392M   0% /run/user/1000
+            total                               20G  6.2G   13G  33% -
         #>
 
         $ssh = New-SSHSession `
