@@ -28,3 +28,4 @@
 | Example-25  | Get the audit logs based on filters                                      | ANY         | Query    |
 | Example-26  | Recover database asset to multiple SQL hosts using custom name & paths   | ANY         | Recover  |
 | Example-27  | Set custom disk exclusions per asset by disk mode (advanced)             | VMWARE      | Config   |
+| Example-28  | Cancel a running or queued activity                                      | ANY         | Backup   |
