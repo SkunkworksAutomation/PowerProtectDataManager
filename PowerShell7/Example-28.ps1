@@ -2,6 +2,11 @@
     THIS CODE REQUIRES POWWERSHELL 7.x.(latest)
     https://github.com/PowerShell/powershell/releases
 
+    PROCESS: 
+    1.) EXPORT AN ACTIVITY CSV FROM THE UI TO THE SCRIPT DIRECTORY
+    2.) REMOVE UNWANTED ASSETS FROM THE CSV AND SAVE
+    3.) RUN THE CODE
+
 #>
 Import-Module .\dell.ppdm.psm1 -Force
 

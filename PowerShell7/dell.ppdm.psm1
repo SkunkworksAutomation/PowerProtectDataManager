@@ -265,7 +265,7 @@ function get-dmactivities {
 function stop-dmactivity {
 <#
     .SYNOPSIS
-    Cancels an activity
+    Cancels an activity that is in a RUNNING or QUEUED state
     
     .DESCRIPTION
     Cancels an activity that is in a RUNNING or QUEUED state
